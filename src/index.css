@@ -1,0 +1,94 @@
+/* src/index.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* DARK MODE (Default - Cinematic Noir) */
+  --bg-color: #0A0A0A;
+  --surface: rgba(26, 26, 26, 0.4);
+  --text-main: #eae2cf;
+  --text-heading: #ffffff;
+  --primary: #FFD60A;
+  --primary-glow: rgba(255, 214, 10, 0.2);
+  --border-glass: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] {
+  /* LIGHT MODE VARIANT */
+  --bg-color: #ffffff;
+  --surface: rgba(255, 255, 255, 0.6);
+  --text-main: #343024;
+  --text-heading: #0A0A0A;
+  --primary: #FFC300;
+  --primary-glow: rgba(255, 195, 0, 0.2);
+  --border-glass: rgba(0, 0, 0, 0.1);
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Manrope', sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* CINEMATIC NOISE GRAIN */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+  opacity: 0.03; /* Subtle 3% film grain */
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* TYPOGRAPHY */
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; color: var(--text-heading); }
+.display-2xl { font-size: 120px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; }
+.headline-md { font-size: 32px; font-weight: 500; letter-spacing: 0.02em; }
+.label-caps { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary); }
+
+/* LAYOUT & GLASSMORPHISM */
+.section {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 64px; /* Generous side margins from your brief */
+}
+
+.glass-panel {
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-glass);
+  border-left: 1px solid var(--border-glass);
+  border-radius: 4px;
+  padding: 24px;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: var(--primary);
+  color: #0A0A0A;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 0 0 var(--primary-glow);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 30px var(--primary-glow);
+  transform: translateY(-2px);
+}
