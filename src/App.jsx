@@ -7,20 +7,20 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
 
-// --- ANIMATED RESPONSIVE DIGIT ---
+// --- ANIMATED RESPONSIVE DIGIT (Scaled Down & Sleek) ---
 const AnimatedDigit = ({ value, label }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{
         position: 'relative',
-        width: 'clamp(50px, 12vw, 80px)',
-        height: 'clamp(65px, 15vw, 90px)',
-        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(10, 10, 10, 0.8) 100%)',
-        borderRadius: '12px',
-        border: '1px solid rgba(255, 255, 255, 0.05)',
-        borderTop: '1px solid rgba(255, 214, 10, 0.3)',
+        width: 'clamp(45px, 8vw, 65px)',   // Reduced max-width
+        height: 'clamp(55px, 10vw, 75px)', // Reduced max-height
+        background: 'rgba(0, 0, 0, 0.15)', // Soft frosted indent
+        borderRadius: '14px',
+        border: '1px solid rgba(255, 255, 255, 0.03)',
+        borderTop: '1px solid rgba(0, 0, 0, 0.5)', // Inner top shadow
         overflow: 'hidden',
-        boxShadow: 'inset 0 4px 20px rgba(0,0,0,0.8)',
+        boxShadow: 'inset 0 4px 10px rgba(0,0,0,0.5)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
@@ -35,10 +35,9 @@ const AnimatedDigit = ({ value, label }) => {
             style={{
               position: 'absolute',
               fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: 'clamp(28px, 6vw, 44px)',
+              fontSize: 'clamp(24px, 5vw, 36px)', // Reduced font size
               fontWeight: 700,
               color: '#ffffff',
-              textShadow: '0 0 15px rgba(255,255,255,0.2)'
             }}
           >
             {value < 10 ? `0${value}` : value}
@@ -47,11 +46,12 @@ const AnimatedDigit = ({ value, label }) => {
       </div>
       <span style={{ 
         fontFamily: "'Space Grotesk', sans-serif", 
-        fontSize: 'clamp(8px, 2vw, 11px)', 
+        fontSize: 'clamp(8px, 1.5vw, 10px)', // Reduced label size
         textTransform: 'uppercase', 
         letterSpacing: '0.2em', 
-        marginTop: '12px', 
-        color: '#888' 
+        marginTop: '10px', 
+        color: 'rgba(255, 255, 255, 0.4)',
+        fontWeight: 500
       }}>
         {label}
       </span>
@@ -162,26 +162,25 @@ export default function App() {
       overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
     }}>
       
-      {/* 🔴 CORRECTED: Rendering the AnimatedBackground here */}
+      {/* 🟢 THE 3D BACKGROUND */}
       <AnimatedBackground />
 
       <div style={{ zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', padding: '20px' }}>
         
-
-{/* 🎬 CINEMATIC TITLE REVEAL */}
+        {/* 🎬 CINEMATIC TITLE REVEAL */}
         <motion.h1
-          initial={{ opacity: 0, y: 30, filter: 'blur(15px)' }} 
+          initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }} 
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} 
-          transition={{ duration: 1.4, delay: 0.2, ease: "easeOut" }}
+          transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
           style={{ 
             fontFamily: "'Space Grotesk', sans-serif", 
-            fontSize: 'clamp(45px, 10vw, 90px)', // Made it slightly larger
+            fontSize: 'clamp(32px, 5vw, 55px)', // Scaled down
             fontWeight: 700, 
             color: '#ffffff', 
-            margin: '0 0 40px 0', 
-            letterSpacing: '-0.04em', 
+            margin: '0 0 25px 0', 
+            letterSpacing: '-0.02em', 
             lineHeight: 1,
-            textShadow: '0 10px 30px rgba(0,0,0,0.5)', 
+            textShadow: '0 10px 30px rgba(0,0,0,0.8)', 
             textAlign: 'center',
             textTransform: 'uppercase'
           }}
@@ -190,18 +189,19 @@ export default function App() {
           <motion.span 
             initial={{ opacity: 0, scale: 0 }} 
             animate={{ opacity: 1, scale: 1 }} 
-            transition={{ delay: 1.2, duration: 0.8, type: "spring" }} // Dramatic pop-in for the dot
+            transition={{ delay: 1.2, duration: 0.8, type: "spring" }}
             style={{ 
               color: '#FFD60A', 
               display: 'inline-block',
-              textShadow: '0 0 30px rgba(255, 214, 10, 0.8)' // Intense yellow glow
+              textShadow: '0 0 30px rgba(255, 214, 10, 0.8)'
             }}
           >
             .
           </motion.span>
         </motion.h1>
 
-        <div style={{ perspective: "1000px", width: '100%', maxWidth: '650px' }}>
+        {/* 🪟 REFERENCE LIQUID GLASS CARD */}
+        <div style={{ perspective: "1200px", width: '100%', maxWidth: '580px' /* Scaled down max-width */ }}>
           <motion.div
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -209,49 +209,73 @@ export default function App() {
               rotateX,
               rotateY,
               transformStyle: "preserve-3d",
-              width: '100%', padding: 'clamp(30px, 5vw, 50px) clamp(15px, 4vw, 30px)', borderRadius: '24px',
-              background: 'linear-gradient(135deg, rgba(40, 40, 40, 0.4) 0%, rgba(10, 10, 10, 0.8) 100%)',
-              backdropFilter: 'blur(50px)', WebkitBackdropFilter: 'blur(50px)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              borderTop: '1px solid rgba(255, 214, 10, 0.4)',
-              boxShadow: 'inset 0 1px 20px rgba(255,255,255,0.05), 0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,214,10,0.05)',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'
+              width: '100%', 
+              padding: 'clamp(30px, 4vw, 45px) clamp(20px, 3vw, 30px)', // Scaled down padding
+              borderRadius: '24px', 
+              
+              // Dark tinted gradient for perfect contrast
+              background: 'linear-gradient(180deg, rgba(30, 30, 30, 0.4) 0%, rgba(5, 5, 5, 0.8) 100%)',
+              backdropFilter: 'blur(32px) saturate(140%)', 
+              WebkitBackdropFilter: 'blur(32px) saturate(140%)',
+              
+              // Crisp white top-edge reflection
+              border: '1px solid rgba(255, 255, 255, 0.04)',
+              borderTop: '1px solid rgba(255, 255, 255, 0.25)', 
+              
+              boxShadow: `
+                inset 0 1px 20px rgba(255, 255, 255, 0.05),
+                0 30px 60px rgba(0, 0, 0, 0.8),
+                0 0 60px rgba(255, 214, 10, 0.05)
+              `,
+              display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
+              position: 'relative',
+              overflow: 'hidden'
             }}
             initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.4 }}
           >
-            <div style={{ transform: "translateZ(40px)" }}>
-              <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(20px, 4vw, 24px)', color: '#ffffff', margin: '0 0 10px 0', fontWeight: 500 }}>
+            {/* MICRO NOISE TEXTURE (Faint) */}
+            <div style={{
+              position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, 
+              opacity: 0.03, pointerEvents: 'none', mixBlendMode: 'overlay',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+            }}></div>
+
+            {/* 3D PUSHED CONTENT */}
+            <div style={{ transform: "translateZ(40px)", zIndex: 1, width: '100%' }}>
+              <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(18px, 3vw, 22px)', color: '#ffffff', margin: '0 0 10px 0', fontWeight: 500, letterSpacing: '-0.02em' }}>
                 Full portfolio launching soon.
               </h2>
-              <p style={{ fontFamily: "'Manrope', sans-serif", fontSize: 'clamp(13px, 3vw, 15px)', color: '#aaa', margin: '0 auto 40px auto', maxWidth: '400px', lineHeight: '1.6' }}>
+              <p style={{ fontFamily: "'Manrope', sans-serif", fontSize: 'clamp(13px, 2vw, 14px)', color: 'rgba(255, 255, 255, 0.5)', margin: '0 auto 35px auto', maxWidth: '380px', lineHeight: '1.6' }}>
                 I’m building a premium space where creativity meets functionality. Designing digital experiences that stand out.
               </p>
 
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 'clamp(4px, 2vw, 12px)' }}>
+              {/* The Digits Grid */}
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 'clamp(6px, 1.5vw, 12px)' }}>
                 <AnimatedDigit value={timeLeft.d} label="Days" />
-                <span style={{ fontSize: 'clamp(20px, 5vw, 30px)', color: '#FFD60A', fontWeight: 700, margin: 'clamp(10px, 3vw, 15px) 0 0 0' }}>:</span>
+                <span style={{ fontSize: 'clamp(16px, 3vw, 24px)', color: 'rgba(255, 255, 255, 0.2)', fontWeight: 700, margin: 'clamp(10px, 3vw, 15px) 0 0 0' }}>:</span>
                 <AnimatedDigit value={timeLeft.h} label="Hours" />
-                <span style={{ fontSize: 'clamp(20px, 5vw, 30px)', color: '#FFD60A', fontWeight: 700, margin: 'clamp(10px, 3vw, 15px) 0 0 0' }}>:</span>
+                <span style={{ fontSize: 'clamp(16px, 3vw, 24px)', color: 'rgba(255, 255, 255, 0.2)', fontWeight: 700, margin: 'clamp(10px, 3vw, 15px) 0 0 0' }}>:</span>
                 <AnimatedDigit value={timeLeft.m} label="Minutes" />
-                <span style={{ fontSize: 'clamp(20px, 5vw, 30px)', color: '#FFD60A', fontWeight: 700, margin: 'clamp(10px, 3vw, 15px) 0 0 0' }}>:</span>
+                <span style={{ fontSize: 'clamp(16px, 3vw, 24px)', color: 'rgba(255, 255, 255, 0.2)', fontWeight: 700, margin: 'clamp(10px, 3vw, 15px) 0 0 0' }}>:</span>
                 <AnimatedDigit value={timeLeft.s} label="Seconds" />
               </div>
             </div>
           </motion.div>
         </div>
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }} style={{ marginTop: '40px', zIndex: 20 }}>
+        {/* 🔗 X / TWITTER BUTTON */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }} style={{ marginTop: '30px', zIndex: 20 }}>
           <a href="https://x.com/AlphaSketcher" target="_blank" rel="noopener noreferrer"
             style={{
-              display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 24px', borderRadius: '50px',
+              display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '50px',
               backgroundColor: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(10px)',
               border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff', textDecoration: 'none',
-              fontFamily: "'Space Grotesk', sans-serif", fontSize: '14px', fontWeight: 500, transition: 'all 0.3s ease'
+              fontFamily: "'Space Grotesk', sans-serif", fontSize: '13px', fontWeight: 500, transition: 'all 0.3s ease'
             }}
             onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 214, 10, 0.1)'; e.currentTarget.style.border = '1px solid rgba(255, 214, 10, 0.5)'; }}
             onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.1)'; }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M13.3174 10.7749L19.1457 4H17.7646L12.7039 9.88256L8.66193 4H4L10.1122 12.8955L4 20H5.38119L10.7254 13.7878L14.994 20H19.656L13.3171 10.7749H13.3174ZM11.4257 12.9738L10.8064 12.0881L5.87886 5.03974H8.00029L11.9769 10.724L12.5962 11.6097L17.7656 19.0075H15.6442L11.4257 12.9742V12.9738Z" fill="white"/>
             </svg>
             Follow updates on X
@@ -259,6 +283,7 @@ export default function App() {
         </motion.div>
       </div>
 
+      {/* MASSIVE BACKGROUND TEXT */}
       <motion.div
         initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
         style={{
@@ -268,6 +293,28 @@ export default function App() {
         }}
       >
         SKETCHER
+      </motion.div>
+
+      {/* 🏁 REFERENCE-STYLE FOOTER */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.5 }}
+        style={{
+          position: 'absolute',
+          bottom: '24px',
+          width: '100%',
+          textAlign: 'center',
+          zIndex: 20,
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontSize: 'clamp(9px, 2vw, 11px)',
+          color: 'rgba(255, 255, 255, 0.3)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.15em',
+          pointerEvents: 'none'
+        }}
+      >
+        ©2024 Alpha Sketcher • Crafted for the future • 404
       </motion.div>
 
     </div>
