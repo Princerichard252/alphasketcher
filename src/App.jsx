@@ -231,8 +231,8 @@ export default function App() {
           </motion.span>
         </motion.h1>
 
-        {/* 🪟 REFERENCE LIQUID GLASS CARD */}
-        <div style={{ perspective: "1200px", width: '100%', maxWidth: '580px' /* Scaled down max-width */ }}>
+{/* 🪟 EXACT REFERENCE LIQUID GLASS CARD */}
+        <div style={{ perspective: "1200px", width: '100%', maxWidth: '580px' }}>
           <motion.div
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -241,15 +241,18 @@ export default function App() {
               rotateY,
               transformStyle: "preserve-3d",
               width: '100%', 
-              padding: 'clamp(30px, 4vw, 45px) clamp(20px, 3vw, 30px)', // Scaled down padding
+              padding: 'clamp(30px, 4vw, 45px) clamp(20px, 3vw, 30px)', 
               borderRadius: '24px', 
               
-              // Dark tinted gradient for perfect contrast
-              background: 'linear-gradient(180deg, rgba(30, 30, 30, 0.4) 0%, rgba(5, 5, 5, 0.8) 100%)',
-              backdropFilter: 'blur(32px) saturate(140%)', 
-              WebkitBackdropFilter: 'blur(32px) saturate(140%)',
+              // --- THE FIX: TRUE TRANSPARENT GLASS ---
+              // Dropped the opacity way down (from 0.8 to 0.3) so you can see through it
+              background: 'linear-gradient(180deg, rgba(20, 20, 20, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
               
-              // Crisp white top-edge reflection
+              // Lowered blur so the thin 3D wireframe isn't erased, boosted saturation for the yellow glow
+              backdropFilter: 'blur(16px) saturate(180%)', 
+              WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+              
+              // Maintained the crisp white physical edges
               border: '1px solid rgba(255, 255, 255, 0.04)',
               borderTop: '1px solid rgba(255, 255, 255, 0.25)', 
               
@@ -264,14 +267,14 @@ export default function App() {
             }}
             initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.4 }}
           >
-            {/* MICRO NOISE TEXTURE (Faint) */}
+            {/* MICRO NOISE TEXTURE */}
             <div style={{
               position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, 
               opacity: 0.03, pointerEvents: 'none', mixBlendMode: 'overlay',
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
             }}></div>
 
-            {/* 3D PUSHED CONTENT */}
+            {/* 3D PUSHED CONTENT (Text and Countdown stay the same) */}
             <div style={{ transform: "translateZ(40px)", zIndex: 1, width: '100%' }}>
               <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 'clamp(18px, 3vw, 22px)', color: '#ffffff', margin: '0 0 10px 0', fontWeight: 500, letterSpacing: '-0.02em' }}>
                 Full portfolio launching soon.
