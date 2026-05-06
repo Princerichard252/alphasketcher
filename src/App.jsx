@@ -125,8 +125,9 @@ export default function App() {
     // Note: In JavaScript, Months are 0-indexed! (0 = January, 4 = May, 11 = December)
     // So for June 3rd, 2024 at 12:00 PM: new Date(2024, 5, 3, 12, 0, 0)
     
-    // For right now, I'll set it exactly 27 days from today (June 1st, 2024)
-    const targetDate = new Date(2024, 5, 1, 0, 0, 0).getTime();
+// Target: June 2nd, 2026 at Midnight (27 days from May 6th)
+    // (Year: 2026, Month: 5 for June, Day: 2, Hour: 0, Min: 0, Sec: 0)
+    const targetDate = new Date(2026, 5, 2, 0, 0, 0).getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -344,7 +345,7 @@ export default function App() {
           pointerEvents: 'none'
         }}
       >
-        ©2024 Alpha Sketcher • Crafted for the future • 404
+        ©2026 Alpha Sketcher • Crafted for the future • 404
       </motion.div>
 
     </div>
