@@ -116,12 +116,22 @@ const AnimatedBackground = () => (
 
 // --- MAIN APP COMPONENT ---
 export default function App() {
-  const [timeLeft, setTimeLeft] = useState({ d: 29, h: 0, m: 0, s: 0 });
+  
+  // 1. REAL-WORLD COUNTDOWN LOGIC
+  const [timeLeft, setTimeLeft] = useState({ d: 0, h: 0, m: 0, s: 0 });
 
   useEffect(() => {
-    const targetDate = new Date().getTime() + 29 * 24 * 60 * 60 * 1000;
+    // ⚠️ SET YOUR EXACT LAUNCH DATE AND TIME HERE (Year, Month, Day, Hour, Minute, Second)
+    // Note: In JavaScript, Months are 0-indexed! (0 = January, 4 = May, 11 = December)
+    // So for June 3rd, 2024 at 12:00 PM: new Date(2024, 5, 3, 12, 0, 0)
+    
+    // For right now, I'll set it exactly 27 days from today (June 1st, 2024)
+    const targetDate = new Date(2024, 5, 1, 0, 0, 0).getTime();
+
     const interval = setInterval(() => {
-      const difference = targetDate - new Date().getTime();
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
       if (difference > 0) {
         setTimeLeft({
           d: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -129,10 +139,30 @@ export default function App() {
           m: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
           s: Math.floor((difference % (1000 * 60)) / 1000),
         });
+      } else {
+        // Stop the timer when it hits zero!
+        clearInterval(interval);
+        setTimeLeft({ d: 0, h: 0, m: 0, s: 0 });
       }
     }, 1000);
+
+    // Run it once immediately so there is no 1-second delay/flash on load
+    const now = new Date().getTime();
+    const difference = targetDate - now;
+    if (difference > 0) {
+      setTimeLeft({
+        d: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        h: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        m: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+        s: Math.floor((difference % (1000 * 60)) / 1000),
+      });
+    }
+
     return () => clearInterval(interval);
   }, []);
+
+  // 2. 3D HOVER EFFECT LOGIC (Track mouse position)
+  // ... (The rest of your App code stays exactly the same)
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
